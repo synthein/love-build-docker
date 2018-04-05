@@ -6,10 +6,17 @@ RUN apt-get update && apt-get -y install \
 	curl \
 	graphviz \
 	lua5.1 \
+	luarocks \
 	make \
 	snapcraft \
 	xz-utils \
 	zip
+	
+# Install some Lua modules.
+RUN luarocks install \
+	lunatest \
+	lrandom \
+	luasocket
 
 # Install LÖVE itself.
 RUN echo "deb http://ppa.launchpad.net/bartbes/love-stable/ubuntu xenial main" >> /etc/apt/sources.list \
