@@ -13,10 +13,11 @@ RUN apt-get update && apt-get -y install \
 	zip
 	
 # Install some Lua modules.
-RUN luarocks install \
-	lunatest \
-	lrandom \
-	luasocket
+RUN for package in \
+		lunatest \
+		lrandom \
+		luasocket \
+	; do luarocks install $package; done
 
 # Install LÖVE itself.
 RUN echo "deb http://ppa.launchpad.net/bartbes/love-stable/ubuntu xenial main" >> /etc/apt/sources.list \
