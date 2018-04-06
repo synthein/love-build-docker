@@ -1,5 +1,7 @@
 FROM ubuntu:16.04
 
+ARG LOVE_VERSION=0.10.2
+
 # Install some helpful utilities for building things.
 RUN apt-get update && apt-get -y install \
 	binutils \
@@ -20,7 +22,7 @@ RUN for package in \
 	; do luarocks install $package; done
 
 # Install LÖVE itself.
-RUN echo "deb http://ppa.launchpad.net/bartbes/love-stable/ubuntu xenial main" >> /etc/apt/sources.list \
-	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 61F881CBF3A87BDF74E398A4F192197F81992645 \
-	&& apt-get update \
-	&& apt-get -y install love
+RUN curl -LO https://bitbucket.org/rude/love/downloads/love_${LOVE_VERSION}ppa1_amd64.deb \
+	&& curl -LO https://bitbucket.org/rude/love/downloads/liblove0_${LOVE_VERSION}ppa1_amd64.deb \
+	&& apt -y install ./liblove0_${LOVE_VERSION}ppa1_amd64.deb \
+	&& apt -y install ./love_${LOVE_VERSION}ppa1_amd64.deb
