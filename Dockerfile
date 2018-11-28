@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-ARG LOVE_VERSION=0.10.2
+ARG LOVE_VERSION=11.2
 
 # Install some helpful utilities for building things.
 RUN apt-get update && apt-get -y install \
@@ -22,7 +22,10 @@ RUN for package in \
 	; do luarocks install $package; done
 
 # Install LÖVE itself.
-RUN curl -LO https://bitbucket.org/rude/love/downloads/love_${LOVE_VERSION}ppa1_amd64.deb \
-	&& curl -LO https://bitbucket.org/rude/love/downloads/liblove0_${LOVE_VERSION}ppa1_amd64.deb \
-	&& apt -y install ./liblove0_${LOVE_VERSION}ppa1_amd64.deb \
-	&& apt -y install ./love_${LOVE_VERSION}ppa1_amd64.deb
+RUN curl -LO https://bitbucket.org/rude/love/downloads/love-${LOVE_VERSION}-x86_64.AppImage \
+	&& chmod +x love-${LOVE_VERSION}-x86_64.AppImage \
+	&& ./love-${LOVE_VERSION}-x86_64.AppImage --appimage-extract \
+	&& mv squashfs-root /opt/love \
+	&& rm love-${LOVE_VERSION}-x86_64.AppImage
+
+ADD love.sh /usr/local/bin/love
