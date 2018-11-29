@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec /opt/love/AppRun $@
+exec /opt/love/love $@

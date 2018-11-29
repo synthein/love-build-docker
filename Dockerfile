@@ -22,10 +22,8 @@ RUN for package in \
 	; do luarocks install $package; done
 
 # Install LÖVE itself.
-RUN curl -LO https://bitbucket.org/rude/love/downloads/love-${LOVE_VERSION}-x86_64.AppImage \
-	&& chmod +x love-${LOVE_VERSION}-x86_64.AppImage \
-	&& ./love-${LOVE_VERSION}-x86_64.AppImage --appimage-extract \
-	&& mv squashfs-root /opt/love \
-	&& rm love-${LOVE_VERSION}-x86_64.AppImage
+RUN curl -LO https://bitbucket.org/rude/love/downloads/love-${LOVE_VERSION}-x86_64.tar.gz \
+	&& tar -xzf love-${LOVE_VERSION}-x86_64.tar.gz \
+	&& mv dest /opt/love
 
 ADD love.sh /usr/local/bin/love
